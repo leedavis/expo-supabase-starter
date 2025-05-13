@@ -1,3 +1,16 @@
+/**
+ * Root Layout Component
+ * 
+ * This is the main layout component that wraps the entire application.
+ * It provides the authentication context and sets up the main navigation structure.
+ * 
+ * Key features:
+ * - Provides AuthProvider context for the entire app
+ * - Configures the main Stack navigator
+ * - Handles theme-aware styling for modal screens
+ * - Manages navigation between protected and public routes
+ */
+
 import "../global.css";
 
 import { Stack } from "expo-router";
@@ -11,6 +24,11 @@ export default function AppLayout() {
 
 	return (
 		<AuthProvider>
+			{/* Main Stack Navigator Configuration
+			 * - (protected): Routes that require authentication
+			 * - welcome: Public welcome screen
+			 * - sign-up/sign-in: Modal screens with themed headers
+			 */}
 			<Stack screenOptions={{ headerShown: false, gestureEnabled: false }}>
 				<Stack.Screen name="(protected)" />
 				<Stack.Screen name="welcome" />
@@ -18,7 +36,7 @@ export default function AppLayout() {
 					name="sign-up"
 					options={{
 						presentation: "modal",
-						headerShown: true,
+						headerShown: false,
 						headerTitle: "Sign Up",
 						headerStyle: {
 							backgroundColor:
@@ -37,7 +55,7 @@ export default function AppLayout() {
 					name="sign-in"
 					options={{
 						presentation: "modal",
-						headerShown: true,
+						headerShown: false,
 						headerTitle: "Sign In",
 						headerStyle: {
 							backgroundColor:
@@ -52,6 +70,7 @@ export default function AppLayout() {
 						gestureEnabled: true,
 					}}
 				/>
+
 			</Stack>
 		</AuthProvider>
 	);

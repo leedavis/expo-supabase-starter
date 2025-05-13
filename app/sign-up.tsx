@@ -1,3 +1,19 @@
+/**
+ * Sign Up Component
+ * 
+ * A form component that handles new user registration with email and password.
+ * Implements strong password validation and password confirmation.
+ * Uses React Hook Form with Zod validation for form handling and validation.
+ * 
+ * Features:
+ * - Email validation
+ * - Strong password requirements (length, case, numbers, special chars)
+ * - Password confirmation matching
+ * - Form state management
+ * - Loading state handling
+ * - Error handling for registration
+ */
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ActivityIndicator, View } from "react-native";
@@ -10,6 +26,7 @@ import { Text } from "@/components/ui/text";
 import { H1 } from "@/components/ui/typography";
 import { useAuth } from "@/context/supabase-provider";
 
+// Form validation schema with strong password requirements
 const formSchema = z
 	.object({
 		email: z.string().email("Please enter a valid email address."),
@@ -40,6 +57,7 @@ const formSchema = z
 export default function SignUp() {
 	const { signUp } = useAuth();
 
+	// Initialize form with validation
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -49,10 +67,10 @@ export default function SignUp() {
 		},
 	});
 
+	// Handle form submission
 	async function onSubmit(data: z.infer<typeof formSchema>) {
 		try {
 			await signUp(data.email, data.password);
-
 			form.reset();
 		} catch (error: Error | any) {
 			console.error(error.message);
@@ -63,6 +81,11 @@ export default function SignUp() {
 		<SafeAreaView className="flex-1 bg-background p-4" edges={["bottom"]}>
 			<View className="flex-1 gap-4 web:m-4">
 				<H1 className="self-start">Sign Up</H1>
+				{/* Form Fields
+				 * - Email input with email-specific keyboard and validation
+				 * - Password input with secure text entry
+				 * - Confirm password input with matching validation
+				 */}
 				<Form {...form}>
 					<View className="gap-4">
 						<FormField
@@ -72,9 +95,11 @@ export default function SignUp() {
 								<FormInput
 									label="Email"
 									placeholder="Email"
+									className="text-primary"
 									autoCapitalize="none"
 									autoComplete="email"
 									autoCorrect={false}
+									autoFocus={true}
 									keyboardType="email-address"
 									{...field}
 								/>
@@ -111,6 +136,10 @@ export default function SignUp() {
 					</View>
 				</Form>
 			</View>
+			{/* Submit Button
+			 * Shows loading indicator while submitting
+			 * Disabled during form submission
+			 */}
 			<Button
 				size="default"
 				variant="default"
