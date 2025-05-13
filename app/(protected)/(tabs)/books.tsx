@@ -1,69 +1,72 @@
 import { router } from "expo-router";
-import { View, StyleSheet, FlatList, Text } from "react-native";
+import { useState, useEffect } from "react";
+import { View, StyleSheet, FlatList, Text, ActivityIndicator } from "react-native";
 
-export type Book = {
-    id: number;
-    title: string;
-    series: string | null;
-    author: string;
-};
 
-export const sampleBooks: Book[] = [
-    {
-        id: 1,
-        title: "The Hobbit",
-        series: "The Lord of the Rings",
-        author: "J.R.R. Tolkien"
-    },
-    {
-        id: 2,
-        title: "The Great Gatsby",
-        series: null,
-        author: "F. Scott Fitzgerald"
-    },
-    {
-        id: 3,
-        title: "The Philosopher's Stone",
-        series: "Harry Potter",
-        author: "J.K. Rowling"
-    },
-    {
-        id: 4,
-        title: "The Name of the Wind",
-        series: "The Kingkiller Chronicle",
-        author: "Patrick Rothfuss"
-    },
-    {
-        id: 5,
-        title: "Project Hail Mary",
-        series: null,
-        author: "Andy Weir"
-    }
-]; 
 
 export default function Books() {
+    const [books, setBooks] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-	return (
-		<View style={styles.container}>
+    const fetchBooks = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch("http://192.168.1.99:5000/books?language=English");
+            const data = await response.json();
+            console.log("Fetched data:", data); // Log the raw data
+            setBooks(data); // Ensure this matches the expected structure
+            setError(null);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-        <FlatList
-            data={sampleBooks}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-                <View style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: "white" }}>
-                    <Text style={{ fontSize: 18 }}>{item.title}</Text>
-                </View>
-            )}
-        />
+    useEffect(() => {
+        fetchBooks();
+    }, []);
 
-		</View>
-	);
+    console.log("Books", books);
+
+    if (!books || books.length === 0) {
+        return (
+            <View style={styles.container}>
+                <Text>No books available</Text>
+            </View>
+        );
+    }
+
+    return (
+        <View style={styles.container}>
+            <Text>Books!</Text>
+            <FlatList
+                data={books}
+                keyExtractor={(item, index) => (item.ID ? item.ID.toString() : index.toString())}
+                renderItem={({ item }) => {
+                    console.log("Rendering item:", item);
+                    return (
+                        <View
+                            style={{
+                                padding: 10,
+                                borderBottomWidth: 1,
+                                borderBottomColor: "white",
+                            }}
+                        >
+                            <Text style={{ fontSize: 18 }}>{item.Title}</Text>
+                        </View>
+                    );
+                }}
+            />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: "white",
-      padding: 10,
+        flex: 1,
+        backgroundColor: "white",
+        padding: 10,
     },
-  }); 
+});
