@@ -11,7 +11,14 @@ export default function TabsLayout() {
 	return (
 		<Tabs
 			screenOptions={{
-				headerShown: false,
+				headerShown: true,
+				headerTitle: "",
+				headerStyle: {
+					backgroundColor:
+						colorScheme === "dark"
+							? colors.dark.background
+							: colors.light.background,
+				},
 				tabBarStyle: {
 					backgroundColor:
 						colorScheme === "dark"
@@ -50,6 +57,7 @@ export default function TabsLayout() {
 				),
 			}}
 			/>
+			
 		</Tabs>
 	);
 }
