@@ -2,8 +2,6 @@ import { router } from "expo-router";
 import { useState, useEffect } from "react";
 import { View, StyleSheet, FlatList, Text, ActivityIndicator } from "react-native";
 
-
-
 export default function Books() {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -14,7 +12,6 @@ export default function Books() {
             setLoading(true);
             const response = await fetch("http://192.168.1.99:5000/books?language=English");
             const data = await response.json();
-            console.log("Fetched data:", data); // Log the raw data
             setBooks(data); // Ensure this matches the expected structure
             setError(null);
         } catch (err) {
@@ -28,8 +25,6 @@ export default function Books() {
         fetchBooks();
     }, []);
 
-    console.log("Books", books);
-
     if (!books || books.length === 0) {
         return (
             <View style={styles.container}>
@@ -40,12 +35,10 @@ export default function Books() {
 
     return (
         <View style={styles.container}>
-            <Text>Books!</Text>
             <FlatList
                 data={books}
                 keyExtractor={(item, index) => (item.ID ? item.ID.toString() : index.toString())}
                 renderItem={({ item }) => {
-                    console.log("Rendering item:", item);
                     return (
                         <View
                             style={{
