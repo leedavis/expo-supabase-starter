@@ -14,8 +14,8 @@ function SeriesItem({ item, onPress }: any) {
     return (
         <TouchableOpacity
             style={{
-                padding: 0, // Remove padding
-                margin: 0, // Remove margin
+                padding: 0,
+                margin: 0,
             }}
             onPress={onPress}
         >
@@ -25,12 +25,11 @@ function SeriesItem({ item, onPress }: any) {
                 }}
                 style={{
                     width: Dimensions.get("window").width,
-                    aspectRatio: 1.5,
-                    alignSelf: "center",
-                    margin: 0, // Remove margin
-                    padding: 0, // Remove padding
+                    height: 200, // Set a fixed height, adjust as needed
+                    margin: 0,
+                    padding: 0,
                 }}
-                resizeMode="cover"
+                resizeMode="cover" // Fill the container, cropping if needed
             />
         </TouchableOpacity>
     );
