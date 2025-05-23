@@ -6,12 +6,12 @@ import { useColorScheme } from "@/lib/useColorScheme";
 import { colors } from "@/constants/colors";
 
 export default function TabsLayout() {
-	const { colorScheme } = useColorScheme();
+	const colorScheme = 'dark'; //useColorScheme();
 
 	return (
 		<Tabs
 			screenOptions={{
-				headerShown: true,
+				headerShown: false,
 				headerTitle: "",
 				headerStyle: {
 					backgroundColor:

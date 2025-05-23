@@ -1,6 +1,7 @@
 import { router, useLocalSearchParams, useRouter } from "expo-router";
 import { useState, useEffect } from "react";
-import { View, StyleSheet, FlatList, Text, ActivityIndicator, TouchableOpacity } from "react-native";
+import { View, StyleSheet, FlatList, Text, ActivityIndicator, TouchableOpacity, Image, Dimensions } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Books() {
     const params = useLocalSearchParams();
@@ -50,63 +51,92 @@ export default function Books() {
                 <Text>No books available</Text>
                 {seriesTitle && (
                     <TouchableOpacity
-                        className="mt-5 p-4 rounded-lg items-center"
-                        style={{ backgroundColor: "#6638f0" }}
+                        style={styles.clearButton}
                         onPress={() => {
                             // Remove the item param and refresh the page
                             router.replace({ pathname: "/(protected)/(tabs)/books" });
                         }}
                     >
-                        <Text className="text-white font-bold text-lg">Clear Series filter</Text>
+                        <Text style={styles.clearButtonText}>Clear Series filter</Text>
                     </TouchableOpacity>
                 )}
             </View>
         );
     }
 
+    const CARD_MARGIN = 5;
+    const CARD_HEIGHT = 240;
+    const CARD_WIDTH = (Dimensions.get("window").width - CARD_MARGIN * 3) / 2;
+
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <FlatList
                 data={filteredBooks}
+                numColumns={2}
                 keyExtractor={(item, index) => (item.ID ? item.ID.toString() : index.toString())}
                 renderItem={({ item }) => (
-                    <View
-                        style={{
-                            padding: 10,
-                            borderBottomWidth: 1,
-                            borderBottomColor: "white",
-                        }}
-                    >
-                        <Text style={{ fontSize: 18 }}>{item.Title}</Text>
+                    <View style={[styles.card, { width: CARD_WIDTH, height: CARD_HEIGHT }]}>
+                        <Image
+                            source={{
+                                uri: `http://192.168.1.99:5000/book_cover?title=${encodeURIComponent(item.cover_image)}`
+                            }}
+                            style={styles.coverImage}
+                            resizeMode="contain"
+                        />
+                        <Text style={styles.bookTitle} numberOfLines={2}>{item.Title}</Text>
                     </View>
                 )}
+                contentContainerStyle={{ padding: CARD_MARGIN }}
+                columnWrapperStyle={{ justifyContent: "space-between", marginBottom: CARD_MARGIN }}
             />
             {seriesTitle && (
                 <TouchableOpacity
-                    className="mt-5 p-4 rounded-lg items-center"
-                    style={{ backgroundColor: "#6638f0" }}
+                    style={styles.clearButton}
                     onPress={() => {
                         // Remove the item param and refresh the page
                         router.replace({ pathname: "/(protected)/(tabs)/books" });
                     }}
                 >
-                    <Text className="text-white font-bold text-lg">Clear Series filter</Text>
+                    <Text style={styles.clearButtonText}>Clear Series filter</Text>
                 </TouchableOpacity>
             )}
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "white",
+        backgroundColor: "#000",
+        padding: 0,
+    },
+    card: {
+        backgroundColor: "#000", // White background
+        borderRadius: 10,
+        marginBottom: 5,
+        overflow: "hidden",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        borderWidth: 1,
+        borderColor: "#000", // Dark gray border
+    },
+    coverImage: {
+        width: "100%",
+        height: 180,
+        marginTop: 10,
+        backgroundColor: "#000",
+    },
+    bookTitle: {
+        fontSize: 16,
+        fontWeight: "bold",
         padding: 10,
+        textAlign: "center",
+        color: "#fff", // White text
     },
     clearButton: {
         marginTop: 20,
         padding: 15,
-        backgroundColor: "#007AFF",
+        backgroundColor: "#7139ea",
         borderRadius: 8,
         alignItems: "center",
     },

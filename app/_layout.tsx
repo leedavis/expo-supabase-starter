@@ -20,7 +20,7 @@ import { useColorScheme } from "@/lib/useColorScheme";
 import { colors } from "@/constants/colors";
 
 export default function AppLayout() {
-	const { colorScheme } = useColorScheme();
+	const colorScheme = 'dark'; //useColorScheme();
 
 	return (
 		<AuthProvider>

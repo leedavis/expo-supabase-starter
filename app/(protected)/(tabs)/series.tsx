@@ -9,6 +9,7 @@ import {
 	ActivityIndicator,
 	TouchableOpacity,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function SeriesItem({ item, onPress }: any) {
     return (
@@ -28,7 +29,7 @@ function SeriesItem({ item, onPress }: any) {
                     style={{
                         width: "100%",
                         height: "100%",
-                        opacity: 0.5,
+                        opacity: 1,
                     }}
                     resizeMode="cover"
                 />
@@ -39,7 +40,8 @@ function SeriesItem({ item, onPress }: any) {
                         left: 0,
                         width: "100%",
                         height: "100%",
-                        justifyContent: "center",
+						marginTop: 30,
+                        justifyContent: "top",
                         alignItems: "center",
                     }}
                 >
@@ -105,7 +107,7 @@ export default function Series() {
 	}
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<FlatList
 				data={series}
 				keyExtractor={(item, index) =>
@@ -126,14 +128,14 @@ export default function Series() {
 				contentContainerStyle={{ padding: 0 }} // Remove FlatList padding
 				ItemSeparatorComponent={null} // No separator
 			/>
-		</View>
+		</SafeAreaView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "white",
+		backgroundColor: "#000",
 		padding: 0, // Remove container padding
         margin: 0, // Remove container margin
 	},
