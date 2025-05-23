@@ -5,7 +5,7 @@ import { Text } from "@/components/ui/text";
 import { H1, Muted } from "@/components/ui/typography";
 import { useAuth } from "@/context/supabase-provider";
 
-export default function Settings() {
+export default function Author() {
 	const { signOut } = useAuth();
 
 	return (
