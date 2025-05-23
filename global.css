@@ -10,7 +10,9 @@
 		--card-foreground: 0 0% 14.50%;
 		--popover: 0 0% 100%;
 		--popover-foreground: 0 0% 14.50%;
-		--primary: 0 0% 20.50%;
+		--primary: 262 89% 58%; /* #6638f0 in HSL */
+		 --tab-icon: 262 89% 58%; /* #6638f0 for tab icons */
+        --tab-label: 262 89% 58%; /* #6638f0 for tab labels */
 		--primary-foreground: 0 0% 98.50%;
 		--secondary: 0 0% 97%;
 		--secondary-foreground: 0 0% 20.50%;
@@ -32,7 +34,9 @@
 		--card-foreground: 0 0% 98%;
 		--popover: 240 10% 3.90%;
 		--popover-foreground: 0 0% 98%;
-		--primary: 0 0% 98%;
+		--primary: 262 89% 58%; /* #6638f0 in HSL */
+		 --tab-icon: 262 89% 58%; /* #6638f0 for tab icons */
+        --tab-label: 262 89% 58%; /* #6638f0 for tab labels */
 		--primary-foreground: 240 5.90% 10%;
 		--secondary: 240 3.70% 15.90%;
 		--secondary-foreground: 0 0% 98%;
@@ -46,4 +50,11 @@
 		--input: 240 3.70% 15.90%;
 		--ring: 240 4.90% 83.90%;
 	}
+}
+
+.tab-icon {
+    color: hsl(var(--tab-icon));
+}
+.tab-label {
+    color: hsl(var(--tab-label));
 }
