@@ -1,9 +1,9 @@
 /**
  * Root Layout Component
- * 
+ *
  * This is the main layout component that wraps the entire application.
  * It provides the authentication context and sets up the main navigation structure.
- * 
+ *
  * Key features:
  * - Provides AuthProvider context for the entire app
  * - Configures the main Stack navigator
@@ -20,7 +20,7 @@ import { useColorScheme } from "@/lib/useColorScheme";
 import { colors } from "@/constants/colors";
 
 export default function AppLayout() {
-	const colorScheme = 'dark'; //useColorScheme();
+	const colorScheme = "dark"; //useColorScheme();
 
 	return (
 		<AuthProvider>
@@ -31,7 +31,24 @@ export default function AppLayout() {
 			 */}
 			<Stack screenOptions={{ headerShown: false, gestureEnabled: false }}>
 				<Stack.Screen name="(protected)" />
-				<Stack.Screen name="welcome" />
+				<Stack.Screen
+					name="welcome"
+					options={{
+						headerShown: false,
+						headerTitle: "Welcome",
+						headerStyle: {
+							backgroundColor:
+								colorScheme === "dark"
+									? colors.dark.background
+									: colors.light.background,
+						},
+						headerTintColor:
+							colorScheme === "dark"
+								? colors.dark.foreground
+								: colors.light.foreground,
+						gestureEnabled: true,
+					}}
+				/>
 				<Stack.Screen
 					name="sign-up"
 					options={{
@@ -70,7 +87,6 @@ export default function AppLayout() {
 						gestureEnabled: true,
 					}}
 				/>
-
 			</Stack>
 		</AuthProvider>
 	);

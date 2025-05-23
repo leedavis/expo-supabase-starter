@@ -14,6 +14,7 @@
 import React, { useState } from "react";
 import { Alert, Modal, View } from "react-native";
 import { useRouter } from "expo-router";
+import { colors } from "@/constants/colors"; // Make sure this import exists
 
 import { Image } from "@/components/image";
 import { SafeAreaView } from "@/components/safe-area-view";
@@ -24,47 +25,26 @@ import { useColorScheme } from "@/lib/useColorScheme";
 
 export default function WelcomeScreen() {
 	const router = useRouter();
-	const { colorScheme } = useColorScheme();
+	const colorScheme = "dark";
 	// Select appropriate app icon based on theme
 	const appIcon =
 		colorScheme === "dark"
-			? require("@/assets/icon.png")
-			: require("@/assets/icon-dark.png");
-
-	const handleAlert = () => {
-		Alert.alert("Hello", "This is a test alert", [
-			{
-				text: "Cancel",
-				style: "cancel",
-			},
-			{
-				text: "OK",
-				onPress: () => {
-					console.log("OK");
-				},
-			},
-		]);
-	};
+			? require("@/assets/lvlanelogodark.png")
+			: require("@/assets/lvlanelogodark.png");
 
 
 	return (
 		<>
-			<SafeAreaView className="flex flex-1 bg-background p-4">
-				{/* Main Content Section
-				 * - App icon with theme-aware image
-				 * - Welcome heading
-				 * - Description text
-				 */}
+			<SafeAreaView style={{ flex: 1, backgroundColor: colors.dark.background, padding: 16 }}
+        > className="flex flex-1 bg-background p-4">
 				<View className="flex flex-1 items-center justify-center gap-y-4 web:m-4">
-					<Image source={appIcon} className="w-16 h-16 rounded-xl" />
-					<H1 className="text-center">Welcome to Expo Supabase Starter</H1>
-					<Muted className="text-center">
-						A comprehensive starter project for developing React Native and Expo
-						applications with Supabase as the backend.
+					<Image source={appIcon} className="w-24 h-24 rounded-xl" />
+					<H1 className="text-center text-white">Steamy Lane</H1>
+					<Muted className="text-center text-white">
+						Quick access to your favorite books and series.
+						{"\n\n"}Sign up to save your progress and access exclusive content.
+						{"\n"}No credit card required.
 					</Muted>
-					<Button onPress={handleAlert} size="default" variant="default">
-						<Text>Alert test button</Text>
-					</Button>
 
 				</View>
 				{/* Authentication Navigation Section
