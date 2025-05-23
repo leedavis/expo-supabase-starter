@@ -13,24 +13,52 @@ import {
 function SeriesItem({ item, onPress }: any) {
     return (
         <TouchableOpacity
+            activeOpacity={1}
             style={{
                 padding: 0,
                 margin: 0,
             }}
             onPress={onPress}
         >
-            <Image
-                source={{
-                    uri: `http://192.168.1.99:5000/series_cover?title=${encodeURIComponent(item)}.jpg`
-                }}
-                style={{
-                    width: Dimensions.get("window").width,
-                    height: 200, // Set a fixed height, adjust as needed
-                    margin: 0,
-                    padding: 0,
-                }}
-                resizeMode="cover" // Fill the container, cropping if needed
-            />
+            <View style={{ position: "relative", width: Dimensions.get("window").width, height: 200 }}>
+                <Image
+                    source={{
+                        uri: `http://192.168.1.99:5000/series_cover?title=${encodeURIComponent(item.Title || item)}.jpg`
+                    }}
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        opacity: 0.5,
+                    }}
+                    resizeMode="cover"
+                />
+                <View
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <Text
+                        style={{
+                            color: "black",
+                            fontWeight: "bold",
+                            fontSize: 28,
+                            textAlign: "center",
+                            backgroundColor: "rgba(255,255,255,0.6)",
+                            paddingHorizontal: 12,
+                            paddingVertical: 4,
+                            borderRadius: 8,
+                        }}
+                    >
+                        {item.Title || item}
+                    </Text>
+                </View>
+            </View>
         </TouchableOpacity>
     );
 }
@@ -84,6 +112,7 @@ export default function Series() {
 					item.ID ? item.ID.toString() : index.toString()
 				}
 				renderItem={({ item }) => (
+
 					<SeriesItem
 						item={item}
 						onPress={() =>
