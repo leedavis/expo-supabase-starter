@@ -36,7 +36,7 @@ export default function WelcomeScreen() {
 	return (
 		<>
 			<SafeAreaView style={{ flex: 1, backgroundColor: colors.dark.background, padding: 16 }}
-        > className="flex flex-1 bg-background p-4">
+         		className="flex flex-1 bg-background p-4">
 				<View className="flex flex-1 items-center justify-center gap-y-4 web:m-4">
 					<Image source={appIcon} className="w-24 h-24 rounded-xl" />
 					<H1 className="text-center text-white">Steamy Lane</H1>
